@@ -68,22 +68,25 @@ class Feed extends Component {
     }
     const graphqlQuery = {
       query: `
-      {
-        posts(page: ${page}) {
-          posts {
-            _id
-            title
-            content
-            imageUrl
-            creator {
-              name
+        query FetchPosts($page: Int) {
+          posts(page: $page) {
+            posts {
+              _id
+              title
+              content
+              imageUrl
+              creator {
+                name
+              }
+              createdAt
             }
-            createdAt
+            totalPosts
           }
-          totalPosts
-        }
       }
-      `
+      `,
+      variables: {
+        page: page
+      }
     }
     fetch('http://localhost:8080/graphql', {
       method: 'POST',
